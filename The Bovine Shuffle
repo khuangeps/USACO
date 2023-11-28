@@ -1,0 +1,43 @@
+package shuffle;
+
+import java.util.*;
+import java.io.*;
+
+public class shuffle {
+	public static void main(String[] args) throws Exception {
+		Scanner in = new Scanner(new File("shuffle.in"));
+		int n = Integer.parseInt(in.next());
+		int[] a = new int[n];
+		int[] orig = new int[n];
+		
+		for (int i = 0; i < n; i++) {
+			a[i] = Integer.parseInt(in.next()) - 1;
+			// -1 since input starts at 1 instead of 0
+		}
+		for (int i = 0; i < n; i++) {
+			orig[i] = Integer.parseInt(in.next());
+		}
+		
+		in.close();
+		
+		int[] shuffled = new int[n];
+		for (int i = 0; i < 3; i++) {
+			for (int j = 0; j < n; j++) {
+				shuffled[j] = orig[a[j]];
+			}
+			
+			for (int j = 0; j < n; j++) {
+				orig[j] = shuffled[j];
+			}
+		}
+		
+		PrintWriter out = new PrintWriter(new File("shuffle.out"));
+		
+		for (int id : shuffled) {
+			out.println(id);
+			System.out.println(id);
+		}
+		
+		out.close();
+	}
+}
