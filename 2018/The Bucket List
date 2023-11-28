@@ -1,0 +1,53 @@
+// http://www.usaco.org/index.php?page=viewproblem2&cpid=856
+package blist;
+
+import java.util.*;
+import java.io.*;
+
+public class blist {
+	public static void main(String[] args) throws Exception {
+		Scanner in = new Scanner(new File("blist.in"));
+		int n = Integer.parseInt(in.next()); // # of cows
+		int[] start = new int[n]; // start times of the cows
+		int[] end = new int[n]; // end times of the cows
+		int[] buckets = new int[n]; // # of buckets needed for milking cow
+		
+		int index = 0;
+		while (in.hasNext()) {
+			start[index] = Integer.parseInt(in.next());
+			end[index] = Integer.parseInt(in.next());
+			buckets[index] = Integer.parseInt(in.next());
+			
+			index++;
+		}
+		
+		in.close();
+		
+		// length of bucket list = latest milking end time
+		int length = end[0];
+		for (int i : end) {
+			if (i > length) {
+				length = i;
+			}
+		}
+		
+		int[] blist = new int[length]; // timeline of # of buckets per point in time
+		for (int i = 0; i < n; i++) { // go thru each milking period
+			for (int j = start[i]; j < end[i]; j++) { 
+				blist[j] += buckets[i]; // add # of buckets needed for current cow
+			}
+		}
+		
+		int result = blist[0]; // max buckets in the timeline(blist)
+		for (int i : blist) {
+			if (i > result) {
+				result = i;
+			}
+		}
+		
+		PrintWriter out = new PrintWriter(new File("blist.out"));
+		System.out.println(result);
+		out.println(result);
+		out.close();
+	}
+}
