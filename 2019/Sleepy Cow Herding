@@ -1,0 +1,37 @@
+// http://www.usaco.org/index.php?page=viewproblem2&cpid=915
+package herding;
+
+import java.util.*;
+import java.io.*;
+
+public class herding {
+	  public static void main(String[] args) throws Exception {
+		    Scanner in = new Scanner(new File("herding.in"));
+		    int a = Integer.parseInt(in.next()); // first cow
+		    int b = Integer.parseInt(in.next()); // second cow
+		    int c = Integer.parseInt(in.next()); // third cow
+		    
+		    int min = 0;
+		    int max = Math.max(b - a, c - b) - 1;
+		    
+		    if (b - a == 2 || c - b == 2) { // diff between a pair of cows = 2
+		    	min = 1;
+		    }
+		    if (b - a == 1 || c - b == 1) { // diff between a pair of cows - 1
+		    	min = 2;
+		    }
+		    if (b - a > 2 && c - b > 2) { // diff between both pairs > 2
+		    	min = 2;
+		    }
+		    if (b - a == 1 && c - b == 1) {
+		    	min = 0;
+		    	max = 0;
+		    }
+		    
+		    PrintWriter out = new PrintWriter(new File("herding.out"));
+//		    System.out.println("max: " + max + "  min: " + min);
+		    out.println(min);
+		    out.println(max);
+		    out.close();
+		  }
+}
