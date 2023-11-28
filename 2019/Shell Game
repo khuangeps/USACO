@@ -1,0 +1,54 @@
+// http://www.usaco.org/index.php?page=viewproblem2&cpid=891
+package shell;
+
+import java.util.*;
+import java.io.*;
+
+public class shell {
+	public static void main(String[] args) throws Exception {
+		Scanner in = new Scanner(new File("shell.in"));
+		int n = Integer.parseInt(in.next()); // # of swaps
+		int[] swap1 = new int[n]; // 1st swapped shell
+		int[] swap2 = new int[n]; // 2nd swapped shell
+		int[] g = new int[n]; // guesses for each swap
+		
+		int count = 0; // current index of arrays
+		while (in.hasNext()) {
+			swap1[count] = Integer.parseInt(in.next());
+			swap2[count] = Integer.parseInt(in.next());
+			g[count] = Integer.parseInt(in.next());
+			
+			count++;
+		}
+			
+		in.close();
+		
+		
+		
+		int[] score = new int[3]; // Elsie's scores
+		
+		int temp = 0;
+		int a = 0;
+		int b = 0;
+		
+		for (int i = 0; i < 3; i++) {
+			int[] game = new int[3]; // simulation of the shell game
+			game[i] = 1;
+			for (int j = 0; j < n; j++) {
+				a = swap1[j] - 1;
+				b = swap2[j] - 1;
+				temp = game[a];
+				
+				game[a] = game[b];
+				game[b] = temp;
+				
+				score[i] += game[g[j] - 1];
+			}
+		}
+		
+		PrintWriter out = new PrintWriter(new File("shell.out"));
+		out.println(Math.max(Math.max(score[0], score[1]), score[2]));
+//		System.out.println(Math.max(Math.max(score[0], score[1]), score[2]));
+		out.close();
+	}
+}
